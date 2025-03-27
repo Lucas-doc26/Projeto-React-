@@ -3,8 +3,8 @@ import { createUsers, deleteUser, getUsers, updateUser } from "../Controllers/us
 
 const router = express.Router()
 
-router.get("/usuarios", getUsers)
-router.post("/usuarios", createUsers)
+router.get("/", getUsers)
+router.post("/", createUsers)
 router.put("/usuarios/:id", updateUser)
 router.delete("/usuarios/:id", deleteUser)
 

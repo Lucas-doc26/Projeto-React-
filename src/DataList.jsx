@@ -12,8 +12,10 @@ const DataList = (props) => {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Lista de Usuários</h1>
+    <div className="container-datalist">
+      <div>
+        <h1>Lista de Usuários</h1>
+      </div>
       <ul className="list">
         {data.map((pessoa) => (
           <li key={pessoa.idusuarios} className="li-list">

@@ -1,33 +1,56 @@
 import React, { useEffect, useState } from "react";
 
-const Crud = (props) => {
-  const [data, setData] = useState([]);
+function Crud(){
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    idade: ""
+  });
 
-  useEffect(() => {
-    fetch("http://localhost:8800/usuarios")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value, 
+    });
+  };
+
+  //envia para o back
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+
+    try {
+      const response = await fetch("http://localhost:8800/usuarios", {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), 
       });
-  }, []);
+
+      const data = await response.json();
+      console.log("Resposta do servidor:", data);
+      alert("Usuário cadastrado com sucesso!");
+
+      setFormData({ nome: "", idade: "", cpf: "" });
+
+    } catch (error) {
+      console.error("Erro ao enviar os dados:", error);
+      alert("Erro ao cadastrar usuário");
+    }
+  };
 
   return (
-    <div className="container">
-      <h1>Lista de Usuários</h1>
-      <ul className="list">
-        {data.map((pessoa) => (
-          <li key={pessoa.idusuarios} className="li-list">
-            Nome: {pessoa.nome}<br />
-            Idade: {pessoa.idade}<br />
-            CPF: {pessoa.cpf}<br />
-            <button className="btn-list" 
-            onClick={() => props.clicked(pessoa)}>
-            Mais detalhes
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="container-add">
+      <h1>Adicionar nova pessoa</h1>
+      <form onSubmit={handleSubmit}>
+      <input type="text" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome" />
+      <input type="text" name="cpf" value={formData.cpf} onChange={handleChange} placeholder="Cpf" />
+      <input type="number" name="idade" value={formData.idade} onChange={handleChange} placeholder="Idade" />
+      <button type="submit">Enviar</button>
+    </form>
     </div>
+    
   );
 };
 

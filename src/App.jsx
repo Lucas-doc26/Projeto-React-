@@ -3,22 +3,20 @@ import DataList from "./DataList";
 import Crud from "./crud.jsx"; 
 import { useState } from "react";
 
-function App() {
+function App(){
 
   function clicked(pessoa){
-    console.log("Pessoa clicou:", pessoa);
+    console.log("Pessoa cliclou:", pessoa)
   }
-
   return (
-    <>
-      <div>
-        <DataList clicked={clicked}></DataList>
+    <div className="container">
+      <div className="left">
+        <DataList clicked={clicked} />
       </div>
-      <div>
-        <Crud></Crud>
+      <div className="right">
+        <Crud />
       </div>
-    </>
+    </div>
   );
 }
-
-export default App;
+export default App

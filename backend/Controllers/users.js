@@ -20,9 +20,10 @@ export const createUsers = (req, res) => {
   db.query(q, [nome, idade, cpf], (err, data) => {
     if (err){
       console.log("Erro ao criar o usuário");
-      return res.json(err);
+      return res.status(500).json(err);//json do erro
     } 
-    res.status(200).send("Usuário criado com sucesso!")
+    res.status(200).json({message: "Usuário criado com sucesso!"})
+    //tem que ser em json para o front validar 
   })
 }
 

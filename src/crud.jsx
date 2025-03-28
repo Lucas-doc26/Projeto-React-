@@ -8,7 +8,7 @@ function Crud(){
   });
 
 
-  const handleChange = (event) => {
+  const formulario = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value, 
@@ -16,7 +16,7 @@ function Crud(){
   };
 
   //envia para o back
-  const handleSubmit = async (event) => {
+  const submitFormulario = async (event) => {
     event.preventDefault(); 
 
     try {
@@ -43,11 +43,13 @@ function Crud(){
   return (
     <div className="container-add">
       <h1>Adicionar nova pessoa</h1>
-      <form onSubmit={handleSubmit}>
-      <input type="text" name="nome" value={formData.nome} onChange={handleChange} placeholder="Nome" />
-      <input type="text" name="cpf" value={formData.cpf} onChange={handleChange} placeholder="Cpf" />
-      <input type="number" name="idade" value={formData.idade} onChange={handleChange} placeholder="Idade" />
+      <form onSubmit={submitFormulario}>
+      <input type="text" name="nome" value={formData.nome} onChange={formulario} placeholder="Nome" />
+      <input type="text" name="cpf" value={formData.cpf} onChange={formulario} placeholder="Cpf" />
+      <input type="number" name="idade" value={formData.idade} onChange={formulario} placeholder="Idade" />
       <button type="submit">Enviar</button>
+
+      
     </form>
     </div>
     

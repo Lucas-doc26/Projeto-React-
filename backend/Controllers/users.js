@@ -1,13 +1,21 @@
 import { db } from "../db.js";
 
-export const getUsers = (_, res) => {
-  const q = "SELECT * FROM Pessoa";
+export const getUsers = (req, res) => {
+  const {id} = req.params;
+  let q;
+  if (id){
+    q = "SELECT * FROM Pessoa WHERE idusuarios = ?";
+  }
+  else{
+    q = "SELECT * FROM Pessoa";
+  }
 
-  db.query(q, (err, data) => {
+  db.query(q, [id], (err, data) => {
     if (err) return res.json(err);
     return res.status(200).json(data);
   });
 };
+
 
 export const createUsers = (req, res) => {
   const {nome, idade, cpf} = req.body;
@@ -28,7 +36,7 @@ export const createUsers = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
-  const {id} = req.body; 
+  const {id} = req.params; 
   const {nome, idade, cpf} = req.body;
   
 
@@ -44,7 +52,8 @@ export const updateUser = (req, res) => {
 }
 
 export const deleteUser = (req, res) => {
-  const {id} = req.body; 
+  console.log(req.params);
+  const {id} = req.params; 
 
   const q = 'DELETE FROM Pessoa WHERE idusuarios = ?';
 
@@ -53,6 +62,6 @@ export const deleteUser = (req, res) => {
       console.log("Erro ao deletar o usuário");
       return res.json(err);
     } 
-    res.status(200).send("Usuário deletado com sucesso!")
+    res.status(200).json({ message: "Usuário deletado com sucesso!" }); 
   })
 }

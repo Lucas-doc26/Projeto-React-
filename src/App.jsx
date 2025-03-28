@@ -1,6 +1,7 @@
 import "./App.css"; // Importa os estilos da aplicação
 import DataList from "./DataList";
 import Crud from "./crud.jsx"; 
+import Update from "./update.jsx";
 import { useState } from "react";
 
 function App(){
@@ -14,8 +15,14 @@ function App(){
         <DataList clicked={clicked} />
       </div>
       <div className="right">
-        <Crud />
+        <div className="right">
+          <Crud />
+        </div>
+        <div className="right">
+          <Update />
+        </div>
       </div>
+      
     </div>
   );
 }

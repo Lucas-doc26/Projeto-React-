@@ -16,7 +16,6 @@ function Formulario() {
 
   const handleSubmit = (e) => {
    
-    
     //vejo se os dados não estão em branco
     if (!formData.nome.trim() || !formData.idade || !formData.email.trim()) {
       alert("Preencha todos os campos!");

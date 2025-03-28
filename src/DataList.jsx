@@ -11,6 +11,30 @@ const DataList = (props) => {
       });
   }, []);
 
+  const deleteUser = (id) => {
+    if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
+    fetch(`http://localhost:8800/usuarios/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((error) => {
+          throw new Error(error.message);
+        });
+      }
+      return res.json();
+    })
+    .then((response) => {
+      console.log("Usuário deletado:", response);
+      setData((prevData) => prevData.filter((pessoa) => pessoa.id !== id));
+    })
+    .catch((err) => console.error("Erro ao excluir usuário:", err));
+  };
+
+
   return (
     <div className="container-datalist">
       <div>
@@ -22,10 +46,15 @@ const DataList = (props) => {
             Nome: {pessoa.nome}<br />
             Idade: {pessoa.idade}<br />
             CPF: {pessoa.cpf}<br />
-            <button className="btn-list" 
-            onClick={() => props.clicked(pessoa)}>
-            Mais detalhes
+            <div className="div-btn">
+            <button
+              className="btn-delete"
+              onClick={() => deleteUser(pessoa.idusuarios)}
+            >
+              Excluir
             </button>
+
+            </div>
           </li>
         ))}
       </ul>
